@@ -203,9 +203,11 @@ def uploadFile():
 				file.save(os.path.join(app.config['UPLOAD_FOLDER'],new_file_name))
 			else:
 				encoding = None
-				img = Image.open(StringIO(file.stream.read()))
-				#img.save(os.path.join(app.config['UPLOAD_FOLDER'],new_file_name))
-				file_url = put_obj2storage(file_name = new_file_name, data = img.tostring('jpeg', 'RGB'), expires='365', type= file.content_type, encoding= encoding)
+				if "*.png;*.jpg;*.jpeg;*.gif;".find(file_type) != -1:#图片
+					img = Image.open(StringIO(file.stream.read()))
+					file_url = put_obj2storage(file_name = new_file_name, data = img.tostring('jpeg', 'RGB'), expires='365', type= file.content_type, encoding= encoding)
+				else:
+					file_url = put_obj2storage(file_name = new_file_name, data = file.stream.read(), expires='365', type= file.content_type, encoding= encoding)
 	return file_url
 
 def shorten_content(htmlstr='',sublength=80):

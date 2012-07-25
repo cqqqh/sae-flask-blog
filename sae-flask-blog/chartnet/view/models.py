@@ -257,6 +257,12 @@ class OperatorDB:
 		if _article:
 			db.session.execute('DELETE FROM `sp_posts` WHERE `id` = %s LIMIT 1' % _id)
 			db.session.execute('DELETE FROM `sp_comments` WHERE `postid` = %s LIMIT %s' % (_id,_article._comment_num))
+			_category = Category.query.filter_by(name=_article._category).first()
+			if _category:
+				if _category.id_num > 1:
+					_category.id_num = _category.id_num-1
+				else:
+					db.session.delete(_category)
 			db.session.commit()
 	
 	def get_post_for_homepage(self):

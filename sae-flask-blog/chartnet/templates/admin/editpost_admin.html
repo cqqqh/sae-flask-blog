@@ -166,7 +166,7 @@ $('#filetoupload').uploadify({
 	onComplete: function (event, queueID, fileObj, response, data) {
 		var el = document.getElementById('html');
         var filetype = fileObj.name.toLowerCase().split(".");
-        var tp ="txt,pdf,png,jpg,jpeg,gif,doc,rar";
+        var tp ="png,jpg,jpeg,gif";
         var rs=tp.indexOf(filetype[filetype.length-1]);
         if(rs>=0){
              el.value += '<p>图片：' + fileObj.name + '<img src="' + response + '" /> </p>';
